@@ -7,6 +7,27 @@ NewPipe, reimagined: faster, more stable, and packed with more features.</h4>
 <a href="https://apt.izzysoft.de/fdroid/index/apk/InfinityLoop1309.NewPipeEnhanced"><img src="assets/IzzyOnDroid.png" alt="Get it on IzzyOnDroid" width="207" /></a></p>
 <hr>
 
+---
+
+## Restricted Mode (this fork)
+
+This fork adds an administrator-controlled **Restricted Mode** that turns PipePipe into a
+subscriptions-only client: only videos from channels already in the subscription list can be
+opened or played, service-wide search and every discovery surface are disabled, and the
+subscription list becomes read-only. The mode is switched on and off **only** by a filesystem
+sentinel that an administrator creates or removes over ADB — there is no in-app toggle:
+
+```bash
+ID=InfinityLoop1309.NewPipeEnhanced.debug        # or …NewPipeEnhanced for the release APK
+adb shell touch /sdcard/Android/data/$ID/files/.subscriptions_only.lock   # ON
+adb shell am force-stop $ID
+adb shell rm -f /sdcard/Android/data/$ID/files/.subscriptions_only.lock   # OFF
+adb shell am force-stop $ID
+```
+
+See **[RESTRICTED_MODE.md](RESTRICTED_MODE.md)** for the administration workflow, the exact ADB
+commands, what is enforced where, the build instructions, the tests and the known limitations.
+
 ## Beyond NewPipe
 
 #### YouTube Enhancements
